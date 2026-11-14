@@ -9,7 +9,13 @@ Tarun, a product designer. Explain things in plain language; avoid unexplained e
 - We work in stages. **Stop for Tarun's review after each stage** — don't roll into the next one.
 - Figma is on the free Starter plan with very few MCP calls per month. Batch work into as few Figma calls as possible, never retry the same call, and stop immediately if the limit is hit.
 
+## Links
+- Live site: https://tarundaboss.github.io/alt-draft/
+- Repo: https://github.com/TarunDaBoss/alt-draft (public; GitHub Pages serves the `main` branch root, so every push to `main` updates the live site)
+
 ## Status
+- **Published early (2026-11-14), at Tarun's request**, before Stage 3. Confirmed on the live site: the model downloads and a real draft is written. No special GitHub Pages setup was needed. `design/`, `test-images/`, `Background Image.png` and `.claude/` are kept out of the repo by `.gitignore`.
+- Stage 3 is NOT done: accessibility pass, friendly error states, "How it works" / "Privacy" panels (the top-bar links go nowhere yet), and the network check. The README is a short first version.
 - **Stage 1 (interface): built and restyled to the final Figma design** (seen via one Figma screenshot on 2026-11-14, with Tarun's OK). Awaiting Tarun's "approved".
 - **Stage 2 (real AI): mostly built early, at Tarun's request.** Working: real drafts from LFM2.5-VL-450M in a Web Worker on WebGPU, real download progress, browser caching (return visits start in about 1–2 seconds), image shrinking (768px longest side), word-by-word streaming, Rewrite draft, context field, decorative toggle.
   **Still to do in Stage 2:** run both model sizes on the 5 images in `test-images/` (folder not in the project yet) and show drafts side by side with time and download size, then Tarun chooses. The 1.6B model needs extra work first (see Tech).
