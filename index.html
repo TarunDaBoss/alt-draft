@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Alt Draft — alt text, drafted for you, finished by you</title>
+  <meta name="description" content="Drop an image. An AI in your browser writes a first draft of its alt text. You edit it and make the call. Your image never leaves your device.">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- Icons, defined once and reused -->
+  <svg width="0" height="0" class="visually-hidden" aria-hidden="true" focusable="false">
+    <symbol id="icon-image" viewBox="0 0 24 24" fill="none">
+      <rect x="3" y="4.5" width="18" height="15" rx="3" stroke="currentColor" stroke-width="1.5"/>
+      <circle cx="8.5" cy="9.5" r="1.5" fill="currentColor"/>
+      <path d="M4 17L8.5 12.5L12 16L15 13L20 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="icon-lock" viewBox="0 0 24 24" fill="none">
+      <rect x="5" y="11" width="14" height="10" rx="2.5" fill="currentColor"/>
+      <path d="M8 11V8C8 5.8 9.8 4 12 4C14.2 4 16 5.8 16 8V11" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="icon-check" viewBox="0 0 24 24" fill="none">
+      <path d="M5.5 12.5L10 17L18.5 7.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+  </svg>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="wordmark" href="./">Alt Draft</a>
+      <nav class="topbar-links" aria-label="About">
+        <a href="#how-it-works">How it works</a>
+        <a href="#privacy">Privacy</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main">
+
+    <!-- 01 Drop -->
+    <section class="screen screen-drop" id="screen-drop" aria-labelledby="drop-headline">
+      <div class="intro">
+        <h1 class="headline headline-hero" id="drop-headline">Alt text, drafted for you. <br class="desktop-break"><em>Finished by you.</em></h1>
+        <p class="subhead">Drop an image. An AI in your browser writes a first draft. You edit it and make the call.</p>
+      </div>
+
+      <div class="dropzone" id="dropzone">
+        <svg class="icon dropzone-icon" aria-hidden="true"><use href="#icon-image"/></svg>
+        <p class="dropzone-title">Drop an image here</p>
+        <button type="button" class="btn btn-secondary" id="choose-file">Choose a file</button>
+        <input type="file" id="file-input" accept="image/*" class="visually-hidden" tabindex="-1" aria-hidden="true">
+        <p class="error" id="drop-error" role="alert" hidden></p>
+      </div>
+
+      <div class="below-drop">
+        <div class="field">
+          <label class="field-label" for="context">Where will this image appear? (optional)</label>
+          <input class="field-input" type="text" id="context" placeholder="e.g. a blog post about adopting a puppy" autocomplete="off">
+        </div>
+        <p class="privacy-note">
+          <svg class="icon icon-14" aria-hidden="true"><use href="#icon-lock"/></svg>
+          Your image never leaves your device.
+        </p>
+      </div>
+    </section>
+
+    <!-- 02b Getting ready · 02 Writing · 03 Edit and approve share this two-column layout -->
+    <section class="screen screen-work" id="screen-work" aria-label="Your image and its draft" hidden>
+      <div class="preview">
+        <img id="preview-image" alt="Preview of the image you chose">
+      </div>
+
+      <div class="work-right">
+
+        <!-- 02b Getting ready (first visit only) -->
+        <div class="panel panel-ready" id="panel-ready" hidden>
+          <h2 class="title" id="ready-title" tabindex="-1">Getting the AI ready</h2>
+          <div class="progress-wrap">
+            <div class="progress" id="progress" role="progressbar" aria-labelledby="ready-title" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+              <div class="progress-fill" id="progress-fill"></div>
+            </div>
+            <p class="caption" id="progress-value">0%</p>
+          </div>
+          <p class="body secondary">This one-time download happens on your first visit. After that, it starts instantly.</p>
+        </div>
+
+        <!-- 02 Writing -->
+        <div class="panel" id="panel-writing" hidden>
+          <div class="draft">
+            <p class="status" id="writing-status" tabindex="-1"><span class="status-dot" aria-hidden="true"></span><span id="writing-status-text" aria-live="polite">Writing a draft…</span></p>
+            <div class="card card-draft" aria-hidden="true">
+              <p class="body" id="writing-text"><span id="writing-words"></span><span class="cursor"></span></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Something went wrong -->
+        <div class="panel panel-ready" id="panel-error" hidden>
+          <h2 class="title" id="error-title" tabindex="-1">The AI couldn't start</h2>
+          <p class="body secondary" id="error-text"></p>
+          <div class="actions">
+            <button type="button" class="btn btn-primary" id="error-retry">Try again</button>
+            <button type="button" class="btn btn-secondary" id="error-back">Choose another image</button>
+          </div>
+        </div>
+
+        <!-- 03 Edit and approve -->
+        <div class="panel" id="panel-edit" hidden>
+          <div class="draft">
+            <p class="chip">AI draft · Check it before you use it</p>
+            <div class="draft-field" id="draft-field">
+              <label class="visually-hidden" for="draft-text">Alt text draft. Edit it until it's right.</label>
+              <div class="card card-draft card-input">
+                <textarea class="body" id="draft-text" rows="2" spellcheck="true" aria-describedby="char-count"></textarea>
+              </div>
+              <p class="caption" id="char-count"></p>
+            </div>
+            <div class="card card-draft" id="decorative-note" hidden>
+              <p class="body secondary">No description needed. Decorative images get an empty alt, so screen readers skip them.</p>
+            </div>
+          </div>
+
+          <div class="toggle-row">
+            <div class="toggle-text">
+              <p class="body" id="decorative-label">This image is decorative</p>
+              <p class="helper" id="decorative-help">Screen readers will skip it. No description needed.</p>
+            </div>
+            <button type="button" class="switch" id="decorative" role="switch" aria-checked="false" aria-labelledby="decorative-label" aria-describedby="decorative-help">
+              <span class="switch-knob"></span>
+            </button>
+          </div>
+
+          <div class="actions">
+            <button type="button" class="btn btn-secondary" id="rewrite">Rewrite draft</button>
+            <button type="button" class="btn btn-primary" id="approve">Approve &amp; Copy</button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 04 Copied -->
+    <section class="screen screen-copied" id="screen-copied" aria-labelledby="copied-headline" hidden>
+      <div class="success-circle" aria-hidden="true">
+        <svg class="icon icon-32"><use href="#icon-check"/></svg>
+      </div>
+      <div class="intro intro-tight">
+        <h1 class="headline" id="copied-headline" tabindex="-1">Copied.</h1>
+        <p class="subhead" id="copied-subhead">Paste it wherever your image goes.</p>
+      </div>
+      <div class="card card-final">
+        <p class="body" id="final-text"></p>
+      </div>
+      <div class="actions actions-stacked">
+        <button type="button" class="btn btn-primary" id="another">Describe another image</button>
+        <button type="button" class="link" id="edit-again">Edit again</button>
+      </div>
+    </section>
+
+  </main>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

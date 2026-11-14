@@ -1,0 +1,7 @@
+# Never published: design sources, test images and local tooling settings
+design/
+test-images/
+Background Image.png
+.claude/
+.DS_Store
+node_modules/
