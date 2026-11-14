@@ -98,6 +98,16 @@ async function openPicture(file) {
   }
 }
 
+/** Check the file really is a readable image, before any waiting starts. */
+export async function checkImage(file) {
+  try {
+    const picture = await openPicture(file);
+    picture.close?.();
+  } catch {
+    throw Object.assign(new Error('The image could not be opened.'), { code: 'bad-image' });
+  }
+}
+
 /** Shrink the image and turn it into raw pixels the AI can read. */
 async function readPixels(file) {
   const picture = await openPicture(file);

@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+  <a class="skip-link" href="#main">Skip to the tool</a>
 
   <!-- Icons, defined once and reused -->
   <svg width="0" height="0" class="visually-hidden" aria-hidden="true" focusable="false">
@@ -28,14 +29,14 @@
   <header class="topbar">
     <div class="topbar-inner">
       <a class="wordmark" href="./">Alt Draft</a>
-      <nav class="topbar-links" aria-label="About">
-        <a href="#how-it-works">How it works</a>
-        <a href="#privacy">Privacy</a>
+      <nav class="topbar-links" aria-label="About Alt Draft">
+        <button type="button" class="topbar-link" data-opens="how-it-works" aria-haspopup="dialog">How it works</button>
+        <button type="button" class="topbar-link" data-opens="privacy" aria-haspopup="dialog">Privacy</button>
       </nav>
     </div>
   </header>
 
-  <main class="main">
+  <main class="main" id="main">
 
     <!-- 01 Drop -->
     <section class="screen screen-drop" id="screen-drop" aria-labelledby="drop-headline">
@@ -44,9 +45,12 @@
         <p class="subhead">Drop an image. An AI in your browser writes a first draft. You edit it and make the call.</p>
       </div>
 
+      <p class="notice" id="support-note" role="status" hidden></p>
+
       <div class="dropzone" id="dropzone">
         <svg class="icon dropzone-icon" aria-hidden="true"><use href="#icon-image"/></svg>
         <p class="dropzone-title">Drop an image here</p>
+        <p class="visually-hidden">You can also paste an image from your clipboard.</p>
         <button type="button" class="btn btn-secondary" id="choose-file">Choose a file</button>
         <input type="file" id="file-input" accept="image/*" class="visually-hidden" tabindex="-1" aria-hidden="true">
         <p class="error" id="drop-error" role="alert" hidden></p>
@@ -65,7 +69,8 @@
     </section>
 
     <!-- 02b Getting ready · 02 Writing · 03 Edit and approve share this two-column layout -->
-    <section class="screen screen-work" id="screen-work" aria-label="Your image and its draft" hidden>
+    <section class="screen screen-work" id="screen-work" aria-labelledby="work-heading" hidden>
+      <h1 class="visually-hidden" id="work-heading">Your image and its draft</h1>
       <div class="preview">
         <img id="preview-image" alt="Preview of the image you chose">
       </div>
@@ -81,7 +86,7 @@
             </div>
             <p class="caption" id="progress-value">0%</p>
           </div>
-          <p class="body secondary">This one-time download happens on your first visit. After that, it starts instantly.</p>
+          <p class="body secondary">This one-time download (about 550 MB) happens on your first visit. After that, it starts in a moment.</p>
         </div>
 
         <!-- 02 Writing -->
@@ -109,7 +114,7 @@
           <div class="draft">
             <p class="chip">AI draft · Check it before you use it</p>
             <div class="draft-field" id="draft-field">
-              <label class="visually-hidden" for="draft-text">Alt text draft. Edit it until it's right.</label>
+              <label class="visually-hidden" for="draft-text">Alt text draft, written by AI. Check it and edit it until it's right.</label>
               <div class="card card-draft card-input">
                 <textarea class="body" id="draft-text" rows="2" spellcheck="true" aria-describedby="char-count"></textarea>
               </div>
@@ -158,6 +163,45 @@
     </section>
 
   </main>
+
+  <!-- Announcements for screen readers -->
+  <div class="visually-hidden" id="announcer" role="status" aria-live="polite"></div>
+
+  <!-- How it works -->
+  <dialog class="sheet" id="how-it-works" aria-labelledby="how-title">
+    <h2 class="title" id="how-title">How it works</h2>
+    <ol class="steps">
+      <li>
+        <p class="step-title">You drop in an image.</p>
+        <p class="helper">It opens on your device. Nothing is uploaded.</p>
+      </li>
+      <li>
+        <p class="step-title">An AI in your browser writes a first draft.</p>
+        <p class="helper">The model is LFM2.5-VL by Liquid AI, run with Transformers.js on your own graphics chip. The first visit downloads it (about 550 MB); your browser keeps a copy for next time.</p>
+      </li>
+      <li>
+        <p class="step-title">You finish it.</p>
+        <p class="helper">The draft is a starting point, not finished alt text. It's a small model: it can misname things, misread text or miss the point of the image. You know why the image is there, so you make the call.</p>
+      </li>
+    </ol>
+    <p class="helper">Good alt text is short, says what matters for the page it's on, and quotes any important text in the image. If an image is only decoration, mark it decorative and leave the alt empty.</p>
+    <p class="helper">Alt Draft needs a browser with WebGPU: a recent Chrome or Edge, Safari 26 or later, or Firefox 141 or later on Windows.</p>
+    <form method="dialog" class="sheet-actions"><button class="btn btn-primary">Done</button></form>
+  </dialog>
+
+  <!-- Privacy -->
+  <dialog class="sheet" id="privacy" aria-labelledby="privacy-title">
+    <h2 class="title" id="privacy-title">Privacy</h2>
+    <p class="body">Your image never leaves your device. The AI runs inside this browser tab, so there is no server to send it to.</p>
+    <ul class="plain-list">
+      <li><span class="step-title">No accounts, no analytics, no tracking, no cookies.</span></li>
+      <li><span class="step-title">What gets downloaded:</span> <span class="helper">this page (from GitHub Pages), the Transformers.js library (from jsDelivr) and the AI model files (from Hugging Face). Like any website, those services see an ordinary request for files. They never see your image, your draft or what you type.</span></li>
+      <li><span class="step-title">What's saved on your device:</span> <span class="helper">a copy of the AI model, so you don't download it twice, and a small note that it's ready. Clearing this site's data in your browser removes both.</span></li>
+      <li><span class="step-title">Your clipboard</span> <span class="helper">is only written to when you press “Approve &amp; Copy”.</span></li>
+    </ul>
+    <p class="helper">The code is open: <a class="text-link" href="https://github.com/TarunDaBoss/alt-draft">github.com/TarunDaBoss/alt-draft</a></p>
+    <form method="dialog" class="sheet-actions"><button class="btn btn-primary">Done</button></form>
+  </dialog>
 
   <script type="module" src="js/app.js"></script>
 </body>

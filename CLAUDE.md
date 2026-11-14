@@ -15,11 +15,12 @@ Tarun, a product designer. Explain things in plain language; avoid unexplained e
 
 ## Status
 - **Published early (2026-11-14), at Tarun's request**, before Stage 3. Confirmed on the live site: the model downloads and a real draft is written. No special GitHub Pages setup was needed. `design/`, `test-images/`, `Background Image.png` and `.claude/` are kept out of the repo by `.gitignore`.
-- Stage 3 is NOT done: accessibility pass, friendly error states, "How it works" / "Privacy" panels (the top-bar links go nowhere yet), and the network check. The README is a short first version.
+- **Stage 3 (polish and trust): done and live (2026-11-14).** Skip link, full keyboard use, visible focus, labels, screen-reader announcement when the draft is ready, reduced motion; friendly states for no WebGPU, non-image files, files over 50 MB, unreadable images, offline and failed loads; "How it works" and "Privacy" panels; full README.
+  Network check result: while drafting, the AI worker made 23 requests, all plain GETs with nothing sent, only to huggingface.co (model files) and cdn.jsdelivr.net (library). The page itself only loaded its own files. The image is never sent anywhere.
+  Small departures from the Figma frames, for accessibility: accent used as text is `#0066CC` (better contrast on pale surfaces); the top-bar links stay visible on mobile so the panels are reachable.
 - **Stage 1 (interface): built and restyled to the final Figma design** (seen via one Figma screenshot on 2026-11-14, with Tarun's OK). Awaiting Tarun's "approved".
 - **Stage 2 (real AI): mostly built early, at Tarun's request.** Working: real drafts from LFM2.5-VL-450M in a Web Worker on WebGPU, real download progress, browser caching (return visits start in about 1–2 seconds), image shrinking (768px longest side), word-by-word streaming, Rewrite draft, context field, decorative toggle.
   **Still to do in Stage 2:** run both model sizes on the 5 images in `test-images/` (folder not in the project yet) and show drafts side by side with time and download size, then Tarun chooses. The 1.6B model needs extra work first (see Tech).
-- Stages 3 (polish and trust) and 4 (publish): not started. Wait for "approved" before each.
 - Decided (2026-11-14): "Finished by you." keeps the system serif italic stand-in; no custom font file.
 - Open question for Tarun: whether mobile should keep the plain-sans headline and hidden top-bar links shown in the Figma mobile frame.
 
