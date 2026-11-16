@@ -18,6 +18,8 @@ Tarun, a product designer. Explain things in plain language; avoid unexplained e
 - **Stage 3 (polish and trust): done and live (2026-11-14).** Skip link, full keyboard use, visible focus, labels, screen-reader announcement when the draft is ready, reduced motion; friendly states for no WebGPU, non-image files, files over 50 MB, unreadable images, offline and failed loads; "How it works" and "Privacy" panels; full README.
   Network check result: while drafting, the AI worker made 23 requests, all plain GETs with nothing sent, only to huggingface.co (model files) and cdn.jsdelivr.net (library). The page itself only loaded its own files. The image is never sent anywhere.
   Small departures from the Figma frames, for accessibility: accent used as text is `#0066CC` (better contrast on pale surfaces); the top-bar links stay visible on mobile so the panels are reachable.
+- **2026-11-16 changes (live):** top bar is now fixed, 70% opaque white (30% transparent) with an 8px background blur. The AI names famous fictional characters: `js/draft-worker.js` first asks the model two small questions ("is this a famous fictional character?" then "NAME from SERIES"), and only then writes the draft starting with that name. Asking inside the main instructions did not work with this small model. Real people are deliberately NOT identified from their looks (unreliable, and a wrong name is harmful); Tarun asked for celebrities too, so this is a known gap he has been told about. Drafts are capped at two sentences.
+- **Cost:** everything is free and nothing is billed to Tarun however many people use it: GitHub Pages hosts the page, jsDelivr serves the library, Hugging Face serves the model, and the AI runs on each visitor's own device. No accounts or keys of Tarun's are involved.
 - **Stage 1 (interface): built and restyled to the final Figma design** (seen via one Figma screenshot on 2026-11-14, with Tarun's OK). Awaiting Tarun's "approved".
 - **Stage 2 (real AI): mostly built early, at Tarun's request.** Working: real drafts from LFM2.5-VL-450M in a Web Worker on WebGPU, real download progress, browser caching (return visits start in about 1–2 seconds), image shrinking (768px longest side), word-by-word streaming, Rewrite draft, context field, decorative toggle.
   **Still to do in Stage 2:** run both model sizes on the 5 images in `test-images/` (folder not in the project yet) and show drafts side by side with time and download size, then Tarun chooses. The 1.6B model needs extra work first (see Tech).
@@ -52,7 +54,8 @@ Final-design changes from the original tokens (the Figma design wins):
 - **Background:** a very soft glow behind everything below the top bar: lavender (about `#EEF0FF`) in the middle, peach (about `#FFE4C4`) rising from the bottom, on `#FFFDFF`.
 - **Hero headline (01 Drop, desktop):** about 80/78 semibold; the second line "Finished by you." is a semibold serif italic. Other headlines ("Copied.") stay 48/52. Mobile headline is 34/40, plain sans.
 - **Cards and inputs are glassy:** cards `rgba(245,245,247,0.6)` with a 1px `rgba(210,210,215,0.45)` border; text input `rgba(255,255,255,0.6)` with the same border. The drop zone stays solid white with the dashed border.
-- **Mobile top bar:** wordmark only.
+- **Mobile top bar:** wordmark only in Figma; the live site keeps the two links so the panels are reachable.
+- **Top bar (all sizes):** fixed to the top, `rgba(255,255,255,0.7)` with `backdrop-filter: blur(8px)`.
 
 ### Tokens
 | Token | Value |

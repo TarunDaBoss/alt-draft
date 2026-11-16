@@ -140,6 +140,13 @@ export function tidy(text) {
     .replace(/^./, (c) => c.toUpperCase());
 }
 
+/** Keep a finished draft to two sentences: alt text should be short. */
+function keepShort(text) {
+  const sentences = text.match(/[^.!?]+[.!?]+["”']?(\s+|$)/g);
+  if (!sentences || sentences.length <= 2) return text;
+  return sentences.slice(0, 2).join('').trim();
+}
+
 /**
  * Write a draft for an image. Calls onText with the draft so far as each word
  * arrives, and returns the finished draft.
@@ -153,5 +160,5 @@ export async function writeDraft({ file, context, previous, onText, signal }) {
     { type: 'generate', key: MODEL_KEY, image, context, previous },
     { onText: (text) => onText?.(tidy(text)), signal, transfer: [image.data] },
   );
-  return tidy(result.text);
+  return keepShort(tidy(result.text));
 }

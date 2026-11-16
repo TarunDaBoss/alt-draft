@@ -18,6 +18,7 @@
   --radius-input: 12px;
   --radius-pill: 999px;
 
+  --topbar-height: 52px;
   --column: 980px;
   --gutter: 22px;
 
@@ -39,6 +40,7 @@ body {
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
+  padding-top: var(--topbar-height); /* room for the fixed top bar */
   background: var(--bg);
   color: var(--text);
   font-family: var(--font);
@@ -113,9 +115,14 @@ h1:focus-visible, h2:focus-visible, .status:focus-visible { outline: none; }
 /* ---------- Top bar ---------- */
 
 .topbar {
-  flex: none;
-  height: 52px;
-  background: var(--bg);
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 5;
+  height: var(--topbar-height);
+  /* 30% see-through, with the page softly blurred behind it */
+  background: rgba(255, 255, 255, 0.7);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
   border-bottom: 1px solid var(--border);
 }
 .topbar-inner {
@@ -495,9 +502,8 @@ h1:focus-visible, h2:focus-visible, .status:focus-visible { outline: none; }
 }
 
 @media (max-width: 600px) {
-  :root { --gutter: 20px; }
+  :root { --gutter: 20px; --topbar-height: 48px; }
 
-  .topbar { height: 48px; }
   .wordmark { font-size: 17px; }
 
   .main { padding: 32px var(--gutter) 40px; }

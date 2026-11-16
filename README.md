@@ -16,6 +16,8 @@ Alt text is the short description a screen reader speaks in place of an image. W
 2. **An AI in your browser writes a first draft.** The model is Liquid AI's LFM2.5-VL-450M, run with Transformers.js on WebGPU inside a Web Worker, so the page stays responsive. Large images are shrunk (768 pixels on the longest side) before the model looks at them. The draft appears word by word.
 3. **You finish it.** Edit the draft, ask for a rewrite, or mark the image as decorative (which gives you an empty `alt=""`). "Approve & Copy" puts the final text on your clipboard.
 
+Before drafting, the model is asked whether the image shows a famous fictional character (cartoon, anime, comic, film or video game). If it says yes, the draft names the character, for example "Goku from Dragon Ball Z". It is told not to name real people from how they look.
+
 If you fill in "Where will this image appear?", the model uses it to choose which visible details matter.
 
 The first visit downloads the model (about 550 MB). Your browser keeps a copy, so later visits start in a second or two.
@@ -35,6 +37,8 @@ Alt Draft is an accessibility tool, so it aims to be accessible itself: everythi
 
 - **It needs WebGPU.** That means a recent Chrome or Edge, Safari 26 or later, or Firefox 141 or later on Windows. Other browsers get a plain message instead of a broken page.
 - **The draft can be wrong.** The model is small. It can misname objects, misread or skip text, miss the point of the image, and sometimes run longer than the 125 characters it is asked for. Always check it.
+- **Character names can be wrong.** It recognises very famous characters; lesser-known ones are described without a name, and now and then it may name the wrong one.
+- **It does not identify real people.** A small model guessing a real person's name from a face is unreliable, and a wrong name in alt text is worse than none. Add the name yourself, or put it in the context box.
 - **It is not built for fine print.** Dense text, charts and screenshots are often described loosely.
 - **It does not know your page.** The context box helps, but only you know what a reader needs from the image.
 - **The first visit is a large download** (about 550 MB), and the model needs a reasonably capable graphics chip and free memory.
